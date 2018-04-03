@@ -1,0 +1,41 @@
+{% set name = "rx" %}
+{% set camelName = "Rx" %}
+{% set version = "1.6.1" %}
+{%set hash_type = "sha256" %}
+{%set hash_val = "13a1d8d9e252625c173dc795471e614eadfe1cf40ffc684e08b8fff0d9748c23" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ camelName }}-{{ version }}.tar.gz
+  {{ hash_type }}: {{ hash_val }}
+
+build:
+  python: noarch
+  number: 0
+  script: python setup.py install --single-version-externally-managed --record=record.txt
+
+requirements:
+  build:
+    - python
+    - setuptools
+
+  run:
+    - python
+
+test:
+  imports:
+    - rx
+
+about:
+  home: https://github.com/ReactiveX/RxPY
+  license_file: {{ RECIPE_DIR }}/LICENSE
+  license: Apache 2.0
+  summary: 'Reactive Extensions for Python'
+
+extra:
+  recipe-maintainers:
+    - dwnoble
